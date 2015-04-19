@@ -18,10 +18,18 @@ class GameScene: SKScene {
         static let None:   UInt32 = (1 << 4)
     }
     
+    struct Constants {
+        static let PlayerImages = ["shrimp01","shrimp02","shrimp03","shrimp04",]
+    }
+    
     var baseNode:SKNode!
     var coralNode:SKNode!
+    var player:SKSpriteNode!
     
     override func didMoveToView(view: SKView) {
+        
+        self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -2.0)
+        
         baseNode = SKNode()
         baseNode.speed = 1.0
         self.addChild(baseNode)
@@ -30,14 +38,49 @@ class GameScene: SKScene {
         baseNode.addChild(coralNode)
         
         self.setupBackground()
+        self.setupPlayer()
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         /* Called when a touch begins */
+        for touch : AnyObject in touches {
+            let location = touch.locationInNode(self)
+            //set power to 0 which is given to player
+            player.physicsBody?.velocity = CGVector.zeroVector
+            //add y power to player
+            player.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 23.0))
+        }
     }
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
+    }
+    
+    func setupPlayer() {
+        var playerTexture = [SKTexture]()
+        
+        for imageName in Constants.PlayerImages {
+            let texture = SKTexture(imageNamed: imageName)
+            texture.filteringMode = .Linear
+            playerTexture.append(texture)
+        }
+        
+        let playerAnimation = SKAction.animateWithTextures(playerTexture,
+            timePerFrame: 0.2)
+        let loopAnimation = SKAction.repeatActionForever(playerAnimation)
+        
+        player = SKSpriteNode(texture: playerTexture[0])
+        player.position = CGPoint(x: self.frame.size.width * 0.35, y: self.frame.size.height * 0.6)
+        player.runAction(loopAnimation)
+        
+        player.physicsBody = SKPhysicsBody(texture: playerTexture[0], size: playerTexture[0].size())
+        player.physicsBody?.dynamic = true
+        player.physicsBody?.allowsRotation = false
+        player.physicsBody?.categoryBitMask = ColliderType.Player
+        player.physicsBody?.collisionBitMask = ColliderType.World | ColliderType.Coral
+        player.physicsBody?.contactTestBitMask = ColliderType.World | ColliderType.Coral
+        
+        self.addChild(player)
     }
     
     func setupBackground() {
