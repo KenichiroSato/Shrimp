@@ -25,6 +25,8 @@ class GameScene: SKScene {
     var baseNode:SKNode!
     var coralNode:SKNode!
     var player:SKSpriteNode!
+    var scoreLabelNode:SKLabelNode!
+    var score: UInt32!
     
     override func didMoveToView(view: SKView) {
         
@@ -40,6 +42,7 @@ class GameScene: SKScene {
         self.setupBackground()
         self.setupPlayer()
         self.setupCoral()
+        self.setupScoreLabel()
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -55,6 +58,17 @@ class GameScene: SKScene {
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
+    }
+    
+    func setupScoreLabel() {
+        score = 0
+
+        scoreLabelNode = SKLabelNode(fontNamed: "Arial Bold")
+        scoreLabelNode.fontColor = UIColor.blackColor()
+        scoreLabelNode.position = CGPoint(x: self.frame.width / 2.0, y: self.frame.size.height * 0.9)
+        scoreLabelNode.zPosition = 100.0
+        scoreLabelNode.text = String(score)
+        self.addChild(scoreLabelNode)
     }
     
     func setupPlayer() {
