@@ -10,21 +10,9 @@ import SpriteKit
 
 class GameScene: SKScene {
     
-    struct ColliderType {
-        static let Player: UInt32 = (1 << 0)
-        static let World:  UInt32 = (1 << 1)
-        static let Coral:  UInt32 = (1 << 2)
-        static let Score:  UInt32 = (1 << 3)
-        static let None:   UInt32 = (1 << 4)
-    }
-    
-    struct Constants {
-        static let PlayerImages = ["shrimp01","shrimp02","shrimp03","shrimp04",]
-    }
-    
     var baseNode:SKNode!
     var coralNode:SKNode!
-    var player:SKSpriteNode!
+    var shrimp:Shrimp!
     var scoreLabelNode:SKLabelNode!
     var score: UInt32!
     
@@ -40,7 +28,7 @@ class GameScene: SKScene {
         baseNode.addChild(coralNode)
         
         self.setupBackground()
-        self.setupPlayer()
+        self.setupShrimp()
         self.setupCoral()
         self.setupScoreLabel()
     }
@@ -49,10 +37,7 @@ class GameScene: SKScene {
         /* Called when a touch begins */
         for touch : AnyObject in touches {
             let location = touch.locationInNode(self)
-            //set power to 0 which is given to player
-            player.physicsBody?.velocity = CGVector.zeroVector
-            //add y power to player
-            player.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 23.0))
+            shrimp.jump()
         }
     }
    
@@ -71,31 +56,9 @@ class GameScene: SKScene {
         self.addChild(scoreLabelNode)
     }
     
-    func setupPlayer() {
-        var playerTexture = [SKTexture]()
-        
-        for imageName in Constants.PlayerImages {
-            let texture = SKTexture(imageNamed: imageName)
-            texture.filteringMode = .Linear
-            playerTexture.append(texture)
-        }
-        
-        let playerAnimation = SKAction.animateWithTextures(playerTexture,
-            timePerFrame: 0.2)
-        let loopAnimation = SKAction.repeatActionForever(playerAnimation)
-        
-        player = SKSpriteNode(texture: playerTexture[0])
-        player.position = CGPoint(x: self.frame.size.width * 0.35, y: self.frame.size.height * 0.6)
-        player.runAction(loopAnimation)
-        
-        player.physicsBody = SKPhysicsBody(texture: playerTexture[0], size: playerTexture[0].size())
-        player.physicsBody?.dynamic = true
-        player.physicsBody?.allowsRotation = false
-        player.physicsBody?.categoryBitMask = ColliderType.Player
-        player.physicsBody?.collisionBitMask = ColliderType.World | ColliderType.Coral
-        player.physicsBody?.contactTestBitMask = ColliderType.World | ColliderType.Coral
-        
-        self.addChild(player)
+    func setupShrimp() {
+        shrimp = Shrimp(frame: self.frame)
+        self.addChild(shrimp)
     }
     
     func setupCoral() {
