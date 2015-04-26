@@ -123,75 +123,35 @@ class GameScene: SKScene {
     }
     
     func setupBackground() {
-        let texture = SKTexture(imageNamed: "background")
-        self.repeatForeverBackgroundTexture(texture,
-            duration:NSTimeInterval(texture.size().width / 10.0),
-            yPosition:self.frame.size.height / 2,
-            zPosition:-100.0,
-            colliderType: ColliderType.None)
-        
-        let underRock = SKTexture(imageNamed: "rock_under")
-        self.repeatForeverBackgroundTexture(underRock,
-            duration:NSTimeInterval(underRock.size().width / 20.0),
-            yPosition:underRock.size().height / 2,
-            zPosition:-50.0,
-            colliderType: ColliderType.None)
-        
-        let aboveRock = SKTexture(imageNamed: "rock_above")
-        self.repeatForeverBackgroundTexture(aboveRock,
-            duration: NSTimeInterval(underRock.size().width / 20.0),
-            yPosition: self.frame.size.height - aboveRock.size().height / 2,
-            zPosition: -50.0,
-            colliderType: ColliderType.None)
-        
-        let ceiling = SKTexture(imageNamed: "ceiling")
-        self.repeatForeverBackgroundTexture(ceiling,
-            duration: NSTimeInterval(ceiling.size().width / 100.0),
-            yPosition:self.frame.size.height - ceiling.size().height / 2,
-            zPosition: 0.0,
-            colliderType: ColliderType.World)
+        let background = Background(image: "background",
+            y: Background.YPosition.Center,
+            depth: Background.Depth.Infinite,
+            cType: ColliderType.None)
+        self.baseNode.addChild(background.repeatForeverNode(self.frame))
 
-        let land = SKTexture(imageNamed: "land")
-        self.repeatForeverBackgroundTexture(land,
-            duration: NSTimeInterval(land.size().width / 100.0),
-            yPosition:land.size().height / 2,
-            zPosition: 0.0,
-            colliderType: ColliderType.World)
-    }
-    
-    func repeatForeverBackgroundTexture(texture:SKTexture,
-        duration: NSTimeInterval,
-        yPosition:CGFloat,
-        zPosition:CGFloat,
-        colliderType:UInt32) {
-        texture.filteringMode = .Nearest
-        let needNumber = 2.0 + (self.frame.size.width / texture.size().width)
+        let underRock = Background(image: "rock_under",
+            y: Background.YPosition.Bottom,
+            depth: Background.Depth.Far,
+            cType: ColliderType.None)
+        self.baseNode.addChild(underRock.repeatForeverNode(self.frame))
         
-        let repeatForeverAnim = self.repeatForeverAnim(texture, duration: duration)
+        let aboveRock = Background(image: "rock_above",
+            y: Background.YPosition.Above,
+            depth: Background.Depth.Far,
+            cType: ColliderType.None)
+        self.baseNode.addChild(aboveRock.repeatForeverNode(self.frame))
         
-        for var i:CGFloat = 0; i < needNumber; i++ {
-            let sprite = SKSpriteNode(texture: texture)
-            sprite.zPosition = zPosition
-            sprite.position = CGPoint(x: i * sprite.size.width, y: yPosition)
-            self.setPhysicsBody(sprite, type: colliderType)
-            sprite.runAction(repeatForeverAnim)
-            baseNode.addChild(sprite)
-        }
+        let ceiling = Background(image: "ceiling",
+            y: Background.YPosition.Above,
+            depth: Background.Depth.Near,
+            cType: ColliderType.World)
+        self.baseNode.addChild(ceiling.repeatForeverNode(self.frame))
+        
+        let land = Background(image: "land",
+            y: Background.YPosition.Bottom,
+            depth: Background.Depth.Near,
+            cType: ColliderType.World)
+        self.baseNode.addChild(land.repeatForeverNode(self.frame))
     }
     
-    func setPhysicsBody(node:SKSpriteNode, type:UInt32) {
-        if let texture = node.texture {
-            node.physicsBody = SKPhysicsBody(texture: texture, size: texture.size())
-            node.physicsBody?.dynamic = false
-            node.physicsBody?.categoryBitMask = type
-        }
-    }
-    
-    func repeatForeverAnim(texture:SKTexture, duration:NSTimeInterval) -> SKAction {
-        let moveAnim = SKAction.moveByX(-texture.size().width,
-            y: 0.0, duration: duration)
-        let resetAnim = SKAction.moveByX(texture.size().width,
-            y: 0.0, duration: 0.0)
-         return SKAction.repeatActionForever(SKAction.sequence([moveAnim, resetAnim]))
-    }
 }
