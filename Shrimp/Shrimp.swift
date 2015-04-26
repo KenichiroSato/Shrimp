@@ -50,4 +50,12 @@ public class Shrimp : SKSpriteNode{
         //add y power to player
         self.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 23.0))
     }
+    
+    public func roll() {
+        let rolling = SKAction.rotateByAngle(CGFloat(M_PI) * self.position.y * 0.01, duration: 1.0)
+        self.runAction(rolling, completion: {
+            self.speed = 0.0
+        })
+
+    }
 }

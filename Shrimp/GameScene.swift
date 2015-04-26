@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var baseNode:SKNode!
     var shrimp:Shrimp!
@@ -18,6 +18,7 @@ class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         
         self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -2.0)
+        self.physicsWorld.contactDelegate = self
         
         baseNode = SKNode()
         baseNode.speed = 1.0
@@ -27,6 +28,48 @@ class GameScene: SKScene {
         self.setupShrimp()
         self.setupCoral()
         self.setupScoreLabel()
+    }
+    
+    func didBeginContact(contact: SKPhysicsContact) {
+        println("Contact!")
+        if self.baseNode.speed <= 0.0 {
+            // already game over
+            return
+        }
+        
+        if (self.isSroreType(contact.bodyA) || self.isSroreType(contact.bodyB)) {
+            score = score + 1
+            scoreLabelNode.text = String(score)
+            
+            let scaleUpAnim = SKAction.scaleTo(1.5, duration: 0.1)
+            let scaleDownAnim = SKAction.scaleTo(1.0, duration: 0.1)
+            scoreLabelNode.runAction(SKAction.sequence([scaleUpAnim, scaleDownAnim]))
+                
+            if (self.isSroreType(contact.bodyA)) {
+                contact.bodyA.categoryBitMask = ColliderType.None
+                contact.bodyA.contactTestBitMask = ColliderType.None
+            } else {
+                contact.bodyB.categoryBitMask = ColliderType.None
+                contact.bodyB.contactTestBitMask = ColliderType.None
+            }
+        } else if (self.isNoneType(contact.bodyA) || self.isNoneType(contact.bodyB)){
+            // nop
+        } else {
+            self.gameOver()
+        }
+    }
+    
+    private func gameOver() {
+        baseNode.speed = 0.0
+        shrimp.roll()
+    }
+    
+    private func isSroreType(body: SKPhysicsBody) -> Bool {
+        return (body.categoryBitMask & ColliderType.Score == ColliderType.Score)
+    }
+    
+    private func isNoneType(body: SKPhysicsBody) -> Bool {
+        return (body.categoryBitMask & ColliderType.None == ColliderType.None)
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
