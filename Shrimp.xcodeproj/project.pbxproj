@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		592373DF1AF3626F008B0ED8 /* ScoreLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592373DE1AF3626F008B0ED8 /* ScoreLabel.swift */; };
 		59EF02561AE3A7E500DDE13F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EF02551AE3A7E500DDE13F /* AppDelegate.swift */; };
 		59EF025A1AE3A7E500DDE13F /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EF02591AE3A7E500DDE13F /* GameScene.swift */; };
 		59EF025C1AE3A7E500DDE13F /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EF025B1AE3A7E500DDE13F /* GameViewController.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		592373DE1AF3626F008B0ED8 /* ScoreLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreLabel.swift; sourceTree = "<group>"; };
 		59EF02501AE3A7E500DDE13F /* Shrimp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shrimp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59EF02541AE3A7E500DDE13F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59EF02551AE3A7E500DDE13F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 			children = (
 				59EF02551AE3A7E500DDE13F /* AppDelegate.swift */,
 				59EF02591AE3A7E500DDE13F /* GameScene.swift */,
+				592373DE1AF3626F008B0ED8 /* ScoreLabel.swift */,
 				59F311391AED207E00587C27 /* Coral.swift */,
 				59EF027E1AEB9B9B00DDE13F /* Background.swift */,
 				59EF027A1AEB4E1600DDE13F /* Shrimp.swift */,
@@ -234,6 +237,7 @@
 				59EF027B1AEB4E1600DDE13F /* Shrimp.swift in Sources */,
 				59EF02561AE3A7E500DDE13F /* AppDelegate.swift in Sources */,
 				59EF027F1AEB9B9B00DDE13F /* Background.swift in Sources */,
+				592373DF1AF3626F008B0ED8 /* ScoreLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
