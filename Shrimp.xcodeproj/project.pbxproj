@@ -14,6 +14,10 @@
 		59EF02611AE3A7E500DDE13F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59EF02601AE3A7E500DDE13F /* Images.xcassets */; };
 		59EF02641AE3A7E500DDE13F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59EF02621AE3A7E500DDE13F /* LaunchScreen.xib */; };
 		59EF02701AE3A7E500DDE13F /* ShrimpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EF026F1AE3A7E500DDE13F /* ShrimpTests.swift */; };
+		59EF027B1AEB4E1600DDE13F /* Shrimp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EF027A1AEB4E1600DDE13F /* Shrimp.swift */; };
+		59EF027D1AEB519E00DDE13F /* ColliderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EF027C1AEB519E00DDE13F /* ColliderType.swift */; };
+		59EF027F1AEB9B9B00DDE13F /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EF027E1AEB9B9B00DDE13F /* Background.swift */; };
+		59F3113A1AED207E00587C27 /* Coral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F311391AED207E00587C27 /* Coral.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +42,10 @@
 		59EF02691AE3A7E500DDE13F /* ShrimpTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShrimpTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		59EF026E1AE3A7E500DDE13F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59EF026F1AE3A7E500DDE13F /* ShrimpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShrimpTests.swift; sourceTree = "<group>"; };
+		59EF027A1AEB4E1600DDE13F /* Shrimp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shrimp.swift; sourceTree = "<group>"; };
+		59EF027C1AEB519E00DDE13F /* ColliderType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColliderType.swift; sourceTree = "<group>"; };
+		59EF027E1AEB9B9B00DDE13F /* Background.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
+		59F311391AED207E00587C27 /* Coral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coral.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +89,10 @@
 			children = (
 				59EF02551AE3A7E500DDE13F /* AppDelegate.swift */,
 				59EF02591AE3A7E500DDE13F /* GameScene.swift */,
+				59F311391AED207E00587C27 /* Coral.swift */,
+				59EF027E1AEB9B9B00DDE13F /* Background.swift */,
+				59EF027A1AEB4E1600DDE13F /* Shrimp.swift */,
+				59EF027C1AEB519E00DDE13F /* ColliderType.swift */,
 				59EF025B1AE3A7E500DDE13F /* GameViewController.swift */,
 				59EF025D1AE3A7E500DDE13F /* Main.storyboard */,
 				59EF02601AE3A7E500DDE13F /* Images.xcassets */,
@@ -216,8 +228,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				59EF025A1AE3A7E500DDE13F /* GameScene.swift in Sources */,
+				59EF027D1AEB519E00DDE13F /* ColliderType.swift in Sources */,
 				59EF025C1AE3A7E500DDE13F /* GameViewController.swift in Sources */,
+				59F3113A1AED207E00587C27 /* Coral.swift in Sources */,
+				59EF027B1AEB4E1600DDE13F /* Shrimp.swift in Sources */,
 				59EF02561AE3A7E500DDE13F /* AppDelegate.swift in Sources */,
+				59EF027F1AEB9B9B00DDE13F /* Background.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,6 +431,7 @@
 				59EF02751AE3A7E500DDE13F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		59EF02761AE3A7E500DDE13F /* Build configuration list for PBXNativeTarget "ShrimpTests" */ = {
 			isa = XCConfigurationList;
@@ -423,6 +440,7 @@
 				59EF02781AE3A7E500DDE13F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
