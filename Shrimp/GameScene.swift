@@ -12,8 +12,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var baseNode:SKNode!
     var shrimp:Shrimp!
-    var scoreLabelNode:SKLabelNode!
-    var score: UInt32!
+    var scoreLabel:ScoreLabel!
     
     override func didMoveToView(view: SKView) {
         
@@ -38,13 +37,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if (self.isSroreType(contact.bodyA) || self.isSroreType(contact.bodyB)) {
-            score = score + 1
-            scoreLabelNode.text = String(score)
+            scoreLabel.countUp()
             
-            let scaleUpAnim = SKAction.scaleTo(1.5, duration: 0.1)
-            let scaleDownAnim = SKAction.scaleTo(1.0, duration: 0.1)
-            scoreLabelNode.runAction(SKAction.sequence([scaleUpAnim, scaleDownAnim]))
-                
             if (self.isSroreType(contact.bodyA)) {
                 contact.bodyA.categoryBitMask = ColliderType.None
                 contact.bodyA.contactTestBitMask = ColliderType.None
@@ -85,14 +79,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func setupScoreLabel() {
-        score = 0
-
-        scoreLabelNode = SKLabelNode(fontNamed: "Arial Bold")
-        scoreLabelNode.fontColor = UIColor.blackColor()
-        scoreLabelNode.position = CGPoint(x: self.frame.width / 2.0, y: self.frame.size.height * 0.9)
-        scoreLabelNode.zPosition = 100.0
-        scoreLabelNode.text = String(score)
-        self.addChild(scoreLabelNode)
+        scoreLabel = ScoreLabel(frame: self.frame)
+        self.addChild(scoreLabel.scoreLabelNode)
     }
     
     func setupShrimp() {
