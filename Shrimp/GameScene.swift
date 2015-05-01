@@ -10,19 +10,28 @@ import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    static private let SPEED : (STOP:CGFloat, START:CGFloat) = (0.0, 1.0)
+    
     var baseNode:SKNode!
     var shrimp:Shrimp!
     var scoreLabel:ScoreLabel!
+    var coral:Coral!
     
     override func didMoveToView(view: SKView) {
         
         self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -2.0)
         self.physicsWorld.contactDelegate = self
         
-        baseNode = SKNode()
-        baseNode.speed = 1.0
-        self.addChild(baseNode)
+        startGame()
+    }
+    
+    private func startGame() {
+        self.removeAllActions()
+        self.removeAllChildren()
         
+        baseNode = SKNode()
+        baseNode.speed = GameScene.SPEED.START
+        self.addChild(baseNode)
         self.setupBackground()
         self.setupShrimp()
         self.setupCoral()
@@ -31,8 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func didBeginContact(contact: SKPhysicsContact) {
         println("Contact!")
-        if self.baseNode.speed <= 0.0 {
-            // already game over
+        if (isGameOver()) {
             return
         }
         
@@ -49,12 +57,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } else if (self.isNoneType(contact.bodyA) || self.isNoneType(contact.bodyB)){
             // nop
         } else {
-            self.gameOver()
+            gameOver()
         }
     }
     
+    private func isGameOver() -> Bool {
+        return baseNode.speed == GameScene.SPEED.STOP
+    }
+    
     private func gameOver() {
-        baseNode.speed = 0.0
+        baseNode.speed = GameScene.SPEED.STOP
         shrimp.roll()
     }
     
@@ -68,8 +80,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         /* Called when a touch begins */
+        
+        if (isGameOver()) {
+            startGame()
+            return
+        }
         for touch : AnyObject in touches {
-            let location = touch.locationInNode(self)
             shrimp.jump()
         }
     }
@@ -89,7 +105,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func setupCoral() {
-        let coral = Coral(parentFrame: self.frame, parentNode: self.baseNode)
+        coral = Coral(parentFrame: self.frame, parentNode: self.baseNode)
         self.runAction(coral.getRepeatForeverAnim())
     }
     
