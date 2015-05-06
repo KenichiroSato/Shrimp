@@ -31,4 +31,9 @@ public class ScoreLabel {
         let scaleDownAnim = SKAction.scaleTo(1.0, duration: 0.1)
         scoreLabelNode.runAction(SKAction.sequence([scaleUpAnim, scaleDownAnim]))
     }
+    
+    func reset() {
+        score = 0
+        scoreLabelNode.text = String(score)
+    }
 }
