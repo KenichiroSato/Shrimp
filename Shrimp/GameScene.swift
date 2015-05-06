@@ -22,20 +22,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -2.0)
         self.physicsWorld.contactDelegate = self
         
+        initNodes()
         startGame()
     }
     
-    private func startGame() {
-        self.removeAllActions()
-        self.removeAllChildren()
-        
+    private func initNodes() {
         baseNode = SKNode()
-        baseNode.speed = GameScene.SPEED.START
         self.addChild(baseNode)
         self.setupBackground()
         self.setupShrimp()
         self.setupCoral()
         self.setupScoreLabel()
+    }
+    
+    private func startGame() {
+        baseNode.speed = GameScene.SPEED.START
+    }
+    
+    private func restartGame() {
+        resetNodes()
+        startGame()
+    }
+    
+    private func resetNodes() {
+        shrimp.reset()
+        scoreLabel.reset()
+        coral.reset()
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
@@ -82,7 +94,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         /* Called when a touch begins */
         
         if (isGameOver()) {
-            startGame()
+            restartGame()
             return
         }
         for touch : AnyObject in touches {

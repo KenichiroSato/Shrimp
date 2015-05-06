@@ -52,4 +52,8 @@ public class Coral {
         return CGFloat(self.parentFrame.size.width + 2.0 * CoralSet.coralWidth())
     }
     
+    func reset() {
+        self.baseNode.removeAllChildren()
+    }
+    
 }
